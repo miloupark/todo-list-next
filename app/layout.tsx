@@ -1,4 +1,11 @@
-import './styles/globals.css';
+import type { Metadata } from 'next';
+import '../styles/globals.css';
+import Header from '@/components/common/Header';
+
+export const metadata: Metadata = {
+  title: 'Todo App',
+  description: 'Next.js Todo Application',
+};
 
 export default function RootLayout({
   children,
@@ -7,14 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <head>
-        <link
-          rel='stylesheet'
-          type='text/css'
-          href='https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css'
-        ></link>
-      </head>
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
