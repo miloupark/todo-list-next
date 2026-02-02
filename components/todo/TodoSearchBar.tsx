@@ -44,7 +44,7 @@ export default function TodoSearchBar({ onAdd }: TodoSearchBarProps) {
         type="submit"
         disabled={isDisabled}
         className={cn(
-          "flex h-14 w-14 shrink-0 items-center justify-center gap-2 rounded-3xl border-2 border-slate-900 shadow-[3px_4px_0_0_#0f172a] md:w-full md:max-w-42 md:min-w-40.5 md:gap-1 md:rounded-full",
+          "flex h-14 w-14 shrink-0 items-center justify-center gap-2 rounded-3xl border-2 border-slate-900 shadow-[3px_4px_0_0_#0f172a] md:w-40.5 md:gap-1 md:rounded-full lg:w-42",
           isDisabled
             ? "bg-slate-200 text-slate-900"
             : "bg-violet-600 text-white",
