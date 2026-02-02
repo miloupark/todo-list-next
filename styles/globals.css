@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-slate-900: #0f172a;
@@ -16,7 +16,7 @@
   --color-lime-300: #bef264;
   --color-amber-800: #92400e;
 
-  --font-nanum-square: 'NanumSquare', sans-serif;
+  --font-nanum-square: "NanumSquare", sans-serif;
 
   --font-size-xl: 20px;
   --font-size-lg: 18px;
@@ -28,4 +28,12 @@
 
 body {
   font-family: var(--font-nanum-square);
+}
+
+.font-regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
 }
