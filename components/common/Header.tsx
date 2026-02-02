@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function Header() {
   return (
-    <div className='w-full border-b border-slate-200 bg-white'>
-      <header className='mx-auto flex items-center px-6 h-15 w-full max-w-312'>
+    <div className="w-full border-b border-slate-200 bg-white">
+      <header className="mx-auto flex h-15 w-full max-w-312 items-center px-6">
         <button
-          type='button'
+          type="button"
           onClick={() => {
-            window.location.href = '/';
+            window.location.href = "/";
           }}
-          className='flex items-center'
-          aria-label='홈으로 이동'
+          className="flex items-center"
+          aria-label="홈으로 이동"
         >
           {/*  모바일 logo */}
           <Image
-            src='/img/logo_sm.svg'
-            alt='로고'
+            src="/img/logo_sm.svg"
+            alt="로고"
             width={71}
             height={40}
-            className='block md:hidden'
+            className="block md:hidden"
           />
           {/*  태블릿/데스크탑 logo */}
           <Image
-            src='/img/logo_lg.svg'
-            alt='로고'
+            src="/img/logo_lg.svg"
+            alt="로고"
             width={151}
             height={40}
-            className='hidden md:block'
+            className="hidden md:block"
           />
         </button>
       </header>
