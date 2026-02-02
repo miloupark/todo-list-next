@@ -27,7 +27,7 @@ export default function TodoListItem({
     : "/icon/check_default.svg";
 
   return (
-    <div
+    <li
       role="button"
       tabIndex={0}
       onClick={onClick}
@@ -61,6 +61,6 @@ export default function TodoListItem({
       >
         {todoText}
       </span>
-    </div>
+    </li>
   );
 }
