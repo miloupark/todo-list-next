@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "HsSantoki20";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2405@1.0/HSSanTokki20-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-slate-900: #0f172a;
   --color-slate-800: #1e293b;
@@ -17,6 +25,7 @@
   --color-amber-800: #92400e;
 
   --font-nanum-square: "NanumSquare", sans-serif;
+  --font-santokki: "HsSantoki20", sans-serif;
 
   --font-size-xl: 20px;
   --font-size-lg: 18px;
@@ -28,6 +37,10 @@
 
 body {
   font-family: var(--font-nanum-square);
+}
+
+.font-santokki {
+  font-family: var(--font-santokki);
 }
 
 .font-regular {
