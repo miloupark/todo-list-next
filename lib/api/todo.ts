@@ -21,24 +21,11 @@ export const getTodo = (tenantId: string, itemId: number) =>
   api<TodoItem>(`/api/${tenantId}/items/${itemId}`);
 
 // 생성
-export const createTodo = (
-  tenantId: string,
-  body: { name: string; memo?: string; imageUrl?: string | null },
-) => {
-  const { name, memo, imageUrl } = body;
-
-  const payload: { name: string; memo?: string; imageUrl?: string | null } = {
-    name,
-  };
-
-  if (memo != null) payload.memo = memo;
-  if (imageUrl != null && imageUrl !== "") payload.imageUrl = imageUrl;
-
-  return api<TodoItem>(`/api/${tenantId}/items`, {
+export const createTodo = (tenantId: string, body: { name: string }) =>
+  api<TodoItem>(`/api/${tenantId}/items`, {
     method: "POST",
-    body: payload,
+    body: { name: body.name },
   });
-};
 
 // 수정
 export const patchTodo = (

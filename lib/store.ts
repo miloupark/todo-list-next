@@ -10,8 +10,7 @@ import {
 } from "@/lib/api/todo";
 import { TENANT_ID } from "@/lib/constant";
 
-type TodoItemCreate = Pick<TodoItem, "name"> &
-  Partial<Pick<TodoItem, "memo" | "imageUrl">>;
+type TodoItemCreate = Pick<TodoItem, "name">;
 
 type TodoStore = {
   todos: TodoItem[];
@@ -22,6 +21,7 @@ type TodoStore = {
   updateTodo: (id: number, patch: TodoItemPatch) => Promise<void>;
   deleteTodo: (id: number) => Promise<void>;
 };
+
 function mergeList(
   prevTodos: TodoItem[],
   list: TodoListItem[],
@@ -70,8 +70,8 @@ export const useTodoStore = create<TodoStore>()(
         }));
       },
 
-      addTodo: async ({ name, memo = "", imageUrl = "" }) => {
-        const item = await createTodo(TENANT_ID, { name, memo, imageUrl });
+      addTodo: async ({ name }) => {
+        const item = await createTodo(TENANT_ID, { name });
         set((s) => ({ todos: [item, ...s.todos] }));
       },
 
