@@ -4,6 +4,8 @@ import { useState } from "react";
 import ItemMemo from "@/components/todo/detail/ItemMemo";
 import ItemButtons from "@/components/todo/detail/ItemButtons";
 import ItemImageUploader from "@/components/todo/detail/ItemImageUploader";
+import { uploadImage } from "@/lib/api/todo";
+import { TENANT_ID } from "@/lib/constant";
 
 interface ItemEditorProps {
   initialMemo: string;
@@ -35,7 +37,7 @@ export default function ItemEditor({
 
     onSave({
       memo,
-      imageUrl: initialImageUrl ?? null,
+      imageUrl: previewUrl ?? null,
     });
     setBaseMemo(memo);
     setBaseImageUrl(previewUrl);
@@ -45,8 +47,18 @@ export default function ItemEditor({
     <div className="flex flex-col gap-4 md:flex-row md:gap-6">
       <ItemImageUploader
         imageUrl={previewUrl}
-        onImageChange={(file) => {
-          setPreviewUrl(file ? URL.createObjectURL(file) : null);
+        onImageChange={async (file) => {
+          if (!file) {
+            setPreviewUrl(null);
+            return;
+          }
+
+          try {
+            const { url } = await uploadImage(TENANT_ID, file);
+            setPreviewUrl(url);
+          } catch (e) {
+            console.error("이미지 업로드 실패", e);
+          }
         }}
       />
       <div className="flex flex-1 flex-col gap-4">

@@ -22,5 +22,5 @@ export type DeleteResponse = {
 };
 
 export type ImageUploadResponse = {
-  imageUrl: string;
+  url: string;
 };

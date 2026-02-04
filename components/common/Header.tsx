@@ -21,6 +21,7 @@ export default function Header() {
             width={71}
             height={40}
             className="block md:hidden"
+            priority
           />
           {/*  태블릿/데스크탑 logo */}
           <Image

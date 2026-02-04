@@ -26,7 +26,14 @@ export default function ItemImageUploader({
   };
 
   return (
-    <section className="relative flex h-77 min-w-[384px] justify-center overflow-hidden rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50">
+    <section
+      className={cn(
+        "relative flex h-77 min-w-[384px] justify-center overflow-hidden rounded-3xl",
+        hasImage
+          ? "border-transparent"
+          : "border-2 border-dashed border-slate-300 bg-slate-50",
+      )}
+    >
       <input
         ref={inputRef}
         type="file"
@@ -44,7 +51,7 @@ export default function ItemImageUploader({
           unoptimized
         />
       ) : (
-        <Image src="/icon/img.svg" alt="" width={64} height={64} />
+        <Image src="/icon/img.svg" alt="" width={64} height={64} priority />
       )}
 
       <button
