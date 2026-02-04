@@ -6,13 +6,19 @@ import TodoListItem from "@/components/todo/TodoListItem";
 import TodoInputBar from "@/components/todo/TodoSearchBar";
 import { useTodoStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
 
   const todos = useTodoStore((s) => s.todos);
+  const fetchTodos = useTodoStore((s) => s.fetchTodos);
   const addTodo = useTodoStore((s) => s.addTodo);
   const toggleTodo = useTodoStore((s) => s.toggleTodo);
+
+  useEffect(() => {
+    fetchTodos();
+  }, [fetchTodos]);
 
   const todoItems = todos.filter((item) => !item.isCompleted);
   const doneItems = todos.filter((item) => item.isCompleted);

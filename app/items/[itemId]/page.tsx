@@ -4,24 +4,38 @@ import ItemEditor from "@/components/todo/detail/ItemEditor";
 import TodoListItem from "@/components/todo/TodoListItem";
 import { useTodoStore } from "@/lib/store";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter();
   const { itemId } = useParams<{ itemId: string }>();
 
-  const todo = useTodoStore((s) => s.todos.find((t) => t.id === itemId));
+  const id = Number(itemId);
+
+  const todo = useTodoStore((s) => s.todos.find((t) => t.id === id));
+  const fetchTodo = useTodoStore((s) => s.fetchTodo);
   const toggleTodo = useTodoStore((s) => s.toggleTodo);
   const updateTodo = useTodoStore((s) => s.updateTodo);
   const deleteTodo = useTodoStore((s) => s.deleteTodo);
 
+  useEffect(() => {
+    if (!Number.isNaN(id)) {
+      fetchTodo(id);
+    }
+  }, [id, fetchTodo]);
+
   if (!todo) return null;
 
-  const onSave = (data: { memo: string; imageUrl?: string | null }) => {
-    updateTodo(todo.id, { memo: data.memo, imageUrl: data.imageUrl ?? null });
+  const onSave = async (data: { memo: string; imageUrl?: string | null }) => {
+    await updateTodo(todo.id, {
+      memo: data.memo,
+      imageUrl: data.imageUrl ?? "",
+    });
+    router.push("/");
   };
 
-  const onDelete = () => {
-    deleteTodo(todo.id);
+  const onDelete = async () => {
+    await deleteTodo(todo.id);
     router.push("/");
   };
 
