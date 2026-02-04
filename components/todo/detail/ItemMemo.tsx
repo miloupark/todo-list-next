@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { useState } from "react";
 
-export default function ItemMemo() {
-  const [memo, setMemo] = useState("");
+type ItemMemoProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
 
+export default function ItemMemo({ value, onChange }: ItemMemoProps) {
   return (
     <section className="relative h-77 w-full">
       {/* 메모 배경 이미지 */}
@@ -23,9 +25,9 @@ export default function ItemMemo() {
       {/* 메모 입력 영역 */}
       <div className="absolute top-14 right-6 bottom-6 left-6">
         <textarea
-          value={memo}
+          value={value}
           aria-label="메모 입력"
-          onChange={(e) => setMemo(e.target.value)}
+          onChange={(e) => onChange(e.target.value)}
           placeholder="메모를 입력하세요"
           className="memo-scroll h-full w-full resize-none overflow-y-auto bg-transparent px-4 py-2 text-slate-800 outline-none"
         />

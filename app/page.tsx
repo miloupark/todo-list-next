@@ -4,41 +4,22 @@ import EmptyState from "@/components/todo/EmptyState";
 import StatusBadge from "@/components/todo/StatusBadge";
 import TodoListItem from "@/components/todo/TodoListItem";
 import TodoInputBar from "@/components/todo/TodoSearchBar";
+import { useTodoStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
-type TodoItem = {
-  id: string;
-  text: string;
-  isCompleted: boolean;
-};
 
 export default function Home() {
   const router = useRouter();
 
-  const [items, setItems] = useState<TodoItem[]>([]);
+  const todos = useTodoStore((s) => s.todos);
+  const addTodo = useTodoStore((s) => s.addTodo);
+  const toggleTodo = useTodoStore((s) => s.toggleTodo);
 
-  const todoItems = items.filter((item) => !item.isCompleted);
-  const doneItems = items.filter((item) => item.isCompleted);
-
-  const toggle = (id: string) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, isCompleted: !item.isCompleted } : item,
-      ),
-    );
-  };
-
-  const add = (text: string) => {
-    setItems((prev) => [
-      { id: crypto.randomUUID(), text, isCompleted: false },
-      ...prev,
-    ]);
-  };
+  const todoItems = todos.filter((item) => !item.isCompleted);
+  const doneItems = todos.filter((item) => item.isCompleted);
 
   return (
     <main className="flex flex-col gap-6 p-4 md:gap-10 md:p-6">
-      <TodoInputBar onAdd={add} />
+      <TodoInputBar onAdd={(text) => addTodo({ name: text })} />
 
       {/* TODO 섹션 */}
       <div className="flex flex-col gap-12 md:flex-row md:gap-6">
@@ -58,9 +39,9 @@ export default function Home() {
               todoItems.map((item) => (
                 <TodoListItem
                   key={item.id}
-                  todoText={item.text}
+                  todoText={item.name}
                   checked={item.isCompleted}
-                  onToggle={() => toggle(item.id)}
+                  onToggle={() => toggleTodo(item.id)}
                   onClick={() => router.push(`/items/${item.id}`)}
                 />
               ))
@@ -85,9 +66,9 @@ export default function Home() {
               doneItems.map((item) => (
                 <TodoListItem
                   key={item.id}
-                  todoText={item.text}
+                  todoText={item.name}
                   checked={item.isCompleted}
-                  onToggle={() => toggle(item.id)}
+                  onToggle={() => toggleTodo(item.id)}
                   onClick={() => router.push(`/items/${item.id}`)}
                 />
               ))

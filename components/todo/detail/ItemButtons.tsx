@@ -3,14 +3,21 @@ import Image from "next/image";
 
 type ItemButtonsProps = {
   isDirty: boolean;
+  onSave: () => void;
+  onDelete: () => void;
 };
 
-export default function ItemButtons({ isDirty }: ItemButtonsProps) {
+export default function ItemButtons({
+  isDirty,
+  onSave,
+  onDelete,
+}: ItemButtonsProps) {
   return (
     <div className="flex justify-center gap-2 md:justify-end">
       <button
         type="button"
         disabled={!isDirty}
+        onClick={onSave}
         className={cn(
           "flex h-14 w-42 shrink-0 items-center justify-center gap-1 rounded-full border-2 border-slate-900 shadow-[3px_4px_0_0_#0f172a]",
           isDirty ? "bg-lime-300" : "bg-slate-200",
@@ -21,6 +28,7 @@ export default function ItemButtons({ isDirty }: ItemButtonsProps) {
       </button>
       <button
         type="button"
+        onClick={onDelete}
         className="flex h-14 w-42 shrink-0 items-center justify-center gap-1 rounded-full border-2 border-slate-900 bg-rose-500 text-white shadow-[3px_4px_0_0_#0f172a]"
       >
         <Image src={"/icon/x.svg"} alt="" width={16} height={16} />
