@@ -14,6 +14,19 @@ interface ItemEditorProps {
   onDelete: () => void;
 }
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const ENGLISH_FILENAME_REGEX = /^[A-Za-z0-9._-]+$/;
+
+function validateImageFile(file: File): string | null {
+  if (file.size > MAX_IMAGE_SIZE) {
+    return "이미지는 5MB 이하만 업로드할 수 있어요.";
+  }
+  if (!ENGLISH_FILENAME_REGEX.test(file.name)) {
+    return "파일명은 영어만 사용해주세요.";
+  }
+  return null;
+}
+
 export default function ItemEditor({
   initialMemo,
   initialImageUrl,
@@ -34,7 +47,6 @@ export default function ItemEditor({
 
   const handleSave = () => {
     if (!isDirty) return;
-
     onSave({
       memo,
       imageUrl: previewUrl ?? null,
@@ -43,23 +55,32 @@ export default function ItemEditor({
     setBaseImageUrl(previewUrl);
   };
 
+  const handleImageChange = async (file: File | null) => {
+    if (!file) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    const error = validateImageFile(file);
+    if (error) {
+      alert(error);
+      return;
+    }
+
+    try {
+      const { url } = await uploadImage(TENANT_ID, file);
+      setPreviewUrl(url);
+    } catch (e) {
+      console.error("이미지 업로드 실패", e);
+      alert("이미지 업로드에 실패했어요.");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 md:flex-row md:gap-6">
       <ItemImageUploader
         imageUrl={previewUrl}
-        onImageChange={async (file) => {
-          if (!file) {
-            setPreviewUrl(null);
-            return;
-          }
-
-          try {
-            const { url } = await uploadImage(TENANT_ID, file);
-            setPreviewUrl(url);
-          } catch (e) {
-            console.error("이미지 업로드 실패", e);
-          }
-        }}
+        onImageChange={handleImageChange}
       />
       <div className="flex flex-1 flex-col gap-4">
         <ItemMemo value={memo} onChange={setMemo} />
